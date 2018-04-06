@@ -1,0 +1,48 @@
+import React from 'react';
+
+export default class Task extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        // This binding is necessary to make `this` work in the callback
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(e) {
+        let data = {
+            class_id: e.target.dataset.id,
+            image_id: this.props.image_id
+        };
+
+        console.log(data);
+
+        fetch('http://localhost:5000/label', {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }, method: 'POST', body: JSON.stringify(data)
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                if (data.result == 'ok') {
+                    alert("done")
+                }
+            });
+    }
+
+    render() {
+        return (
+            <div className="task">
+                <img src={this.props.image}/>
+                <ul>
+                    {this.props.labels.map((item, i) => <li key={i}>
+                        <button data-id={i} onClick={this.handleClick}>{item}</button>
+                    </li>)}
+                </ul>
+            </div>
+        );
+    }
+}
