@@ -12,6 +12,7 @@ import os
 import PIL
 import io
 from os.path import join
+from HiveModel import HiveModel
 
 IMG_SIZE = 128
 
@@ -63,6 +64,12 @@ test_y = y[:split]
 train_x = x[split:split + train_size]
 train_y = y[split:split + train_size]
 
+image_id = 0
+model = HiveModel()
+x = np.expand_dims(train_x[0], axis=0)
+y = np.expand_dims(train_y[0], axis=0)
+model.train(x, y)
+
 app = Flask(__name__, static_url_path='/static')
 CORS(app)
 
@@ -72,19 +79,39 @@ def hello():
 
 @app.route("/task")
 def get_task():
-    image_id = random.randint(0, len(images) - 1)
+    global image_id
+
     image_url = 'http://localhost:5000/image/%d' % image_id
     data = {
         'image': image_url,
         'image_id': image_id,
-        'labels': classes
+        'labels': classes,
     }
+
+    # loop trough all images in dataset
+    #@todo only pick training images!!!
+
+    image_id += 1
+    if image_id >= len(images):
+        image_id = 0
+
     return jsonify(data)
 
 @app.route("/label", methods=['POST'])
 def post_label():
+    global model
+
     data = request.get_json()
     print (data)
+
+    image_id = data['image_id']
+    #@todo use class from request
+    x = np.expand_dims(train_x[image_id], axis=0)
+    y = np.expand_dims(train_y[image_id], axis=0)
+    print(x.shape, y.shape)
+
+    model.train(x,y)
+
     data['result'] = 'ok'
     return jsonify(data)
 
