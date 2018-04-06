@@ -15,7 +15,7 @@ export default class Task extends React.Component {
             image_id: this.props.image_id
         };
 
-        console.log(data);
+        let handleComplete = this.props.handleComplete;
 
         fetch('http://localhost:5000/label', {
             headers: {
@@ -28,7 +28,7 @@ export default class Task extends React.Component {
             })
             .then(function (data) {
                 if (data.result == 'ok') {
-                    alert("done")
+                    handleComplete()
                 }
             });
     }
