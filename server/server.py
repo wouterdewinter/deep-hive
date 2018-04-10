@@ -7,12 +7,13 @@ import numpy as np
 import PIL
 import io
 from HiveModel import HiveModel
+import redis, json
 
 image_id = 0
-model = HiveModel()
-x = np.expand_dims(model._train_x[0], axis=0)
-y = np.expand_dims(model._train_y[0], axis=0)
-model.train(x, y)
+model = HiveModel(path='../data/128x128')
+
+# connect to redis
+r = redis.StrictRedis(host='localhost', port=6379)
 
 app = Flask(__name__, static_url_path='/static')
 CORS(app)
@@ -39,14 +40,27 @@ def get_task():
 
     return jsonify(data)
 
+@app.route("/status")
+def get_status():
+    acc = r.lrange('accuracies', 0, 10)
+    acc = np.array(acc).astype('float')
+    print(acc)
+    mean = np.mean(acc)
+
+    data = {
+        'accuracy': mean,
+    }
+
+    return jsonify(data)
+
 @app.route("/label", methods=['POST'])
 def post_label():
-    global model
+    global r
 
     data = request.get_json()
-    print (data)
-
-    model.label(data['image_id'], data['class_id'])
+    #print (data)
+    #model.label(data['image_id'], data['class_id'])
+    r.publish('labels', json.dumps(data))
 
     data['result'] = 'ok'
     return jsonify(data)
@@ -57,6 +71,5 @@ def get_image(image_id):
     img = PIL.Image.fromarray(img_data)
     bytes = io.BytesIO()
     img.save(bytes, 'PNG')
-    print(bytes)
     bytes.seek(0)
     return send_file(bytes, mimetype='image/png')

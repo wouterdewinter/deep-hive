@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+#  web:
+#    build: .
+#    ports:
+#      - "5000:5000"
+#    volumes:
+#      - .:/opt/src
+#    working_dir: "/opt/src/app"
+#    links:
+#      - db
+#    environment:
+#      FLASK_APP: server.py
+#      FLASK_DEBUG: 1
+#    command: ["source activate snoek && flask run --with-threads --host=0.0.0.0"]
+#  notebooks:
+#    build: .
+#    ports:
+#      - "8888:8888"
+#    volumes:
+#      - .:/opt/src
+#    links:
+#      - db
+#    command: ["jupyter notebook --notebook-dir=notebooks --ip='*' --no-browser --allow-root"]
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data

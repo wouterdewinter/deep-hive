@@ -1,5 +1,6 @@
 import React from 'react';
 import Task from './Task'
+import Status from './Status'
 
 export default class App extends React.Component {
 
@@ -44,7 +45,10 @@ export default class App extends React.Component {
             return <div>Loading...</div>;
         } else {
             return (
-                <Task image={data.image} image_id={data.image_id} labels={data.labels} handleComplete={this.newTask.bind(this)} />
+                <div>
+                    <Task image={data.image} image_id={data.image_id} labels={data.labels} handleComplete={this.newTask.bind(this)} />
+                    <Status />
+                </div>
             );
         }
     }
