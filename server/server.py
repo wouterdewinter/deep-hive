@@ -26,7 +26,7 @@ def hello():
 def get_task():
     global image_id, model
 
-    image_url = 'http://localhost:5000/image/%d' % image_id
+    image_url = 'http://localhost:5000/image/train/%d' % image_id
     data = {
         'image': image_url,
         'image_id': image_id,
@@ -42,7 +42,7 @@ def get_task():
 
 @app.route("/status")
 def get_status():
-    acc = r.lrange('accuracies', 0, 10)
+    acc = r.lrange('accuracies', 0, -1) # fetch complete list
     acc = np.array(acc).astype('float')
     print(acc)
     mean = np.mean(acc)
@@ -65,11 +65,20 @@ def post_label():
     data['result'] = 'ok'
     return jsonify(data)
 
-@app.route("/image/<int:image_id>")
-def get_image(image_id):
-    img_data = np.uint8(model._train_images[image_id])
+
+def return_image(img_data):
     img = PIL.Image.fromarray(img_data)
     bytes = io.BytesIO()
     img.save(bytes, 'PNG')
     bytes.seek(0)
     return send_file(bytes, mimetype='image/png')
+
+@app.route("/image/train/<int:image_id>")
+def get_train_image(image_id):
+    img_data = np.uint8(model._train_images[image_id])
+    return return_image(img_data)
+
+@app.route("/image/test/<int:image_id>")
+def get_test_image(image_id):
+    img_data = np.uint8(model._test_images[image_id])
+    return return_image(img_data)

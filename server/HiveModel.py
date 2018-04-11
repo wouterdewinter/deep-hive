@@ -1,10 +1,12 @@
-import os, keras
-from keras.layers import GlobalMaxPooling2D, GlobalAveragePooling2D, Dense, Dropout
+import os
 from os.path import join
-from keras.preprocessing import image
 import random
-from keras.applications.resnet50 import preprocess_input
 import numpy as np
+import keras
+from keras.layers import GlobalMaxPooling2D, GlobalAveragePooling2D, Dense, Dropout
+from keras.optimizers import SGD
+from keras.preprocessing import image
+from keras.applications.resnet50 import preprocess_input
 
 class HiveModel:
 
@@ -36,11 +38,13 @@ class HiveModel:
             Dense(2, activation='softmax')
         ])
 
-        self._model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
+        sgd = SGD(lr=0.001)
+
+        self._model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
         self._model.summary()
 
     def load_data(self):
-        print("Loading images")
+        print("Loading images ...")
 
         self._classes = next(os.walk(self._path))[1]
         samples = []
@@ -57,6 +61,7 @@ class HiveModel:
                     pass
 
         # shuffle all samples
+        random.seed(4)  # deterministic
         random.shuffle(samples)
         images, labels = zip(*samples)
 
@@ -87,17 +92,20 @@ class HiveModel:
         print("Loaded %d images" % images.shape[0])
 
     def label(self, image_id, class_id):
+        image_id = int(image_id)
+        class_id = int(class_id)
         x = np.expand_dims(self._train_x[image_id], axis=0)
         y = keras.utils.to_categorical(np.expand_dims(np.array(class_id), axis=0), num_classes=len(self._classes))
+        print("Training image %d with label %d" % (image_id, class_id))
         self.train(x, y)
 
     def evaluate(self):
         self._test_id += 1
-        print("evaluating id %d" % self._test_id)
         x = np.expand_dims(self._train_x[self._test_id], axis=0)
         y = np.expand_dims(self._train_y[self._test_id], axis=0)
-        score = self._model.evaluate(x, y)
-        print("score is ", score)
+        score = self._model.evaluate(x, y, verbose=0)
+
+        print("Evaluating id %d, score is %d" % (self._test_id, score[1]))
 
         if self._test_id > self._test_x.shape[0]-1:
             self._test_id = 0
@@ -105,4 +113,4 @@ class HiveModel:
         return score[1]
 
     def train(self, x, y):
-        self._model.fit(x=x, y=y, batch_size=1, epochs=1, verbose=2)
+        self._model.fit(x=x, y=y, batch_size=1, epochs=1, verbose=0)

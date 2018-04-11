@@ -18,5 +18,5 @@ for message in p.listen():
         acc = model.evaluate()
         r.lpush('accuracies', acc)
 
-        # only keep last 10
-        r.ltrim('accuracies', 0, 10)
+        # trim list to last n entries
+        r.ltrim('accuracies', 0, 64)
