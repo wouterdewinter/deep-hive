@@ -1,9 +1,14 @@
 import React from 'react';
+import Grid from './Grid'
 
 export default class Status extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {accuracy: 0}
+        this.state = {
+            accuracy: 0,
+            test_scores: [],
+            test_labels: []
+        }
     }
 
     componentDidMount() {
@@ -30,7 +35,11 @@ export default class Status extends React.Component {
             })
             .then(function (data) {
                 console.log(data);
-                setter({accuracy: data.accuracy});
+                setter({
+                    accuracy: data.accuracy,
+                    test_scores: data.test_scores,
+                    test_labels: data.test_labels
+                });
             });
 
     }
@@ -39,6 +48,7 @@ export default class Status extends React.Component {
         return (
             <div className="status">
                 Accuracy {this.state.accuracy}
+                <Grid test_labels={this.state.test_labels} test_scores={this.state.test_scores} />
             </div>
         );
     }

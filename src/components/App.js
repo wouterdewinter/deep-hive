@@ -1,6 +1,5 @@
 import React from 'react';
 import Task from './Task'
-import Grid from './Grid'
 import Status from './Status'
 
 export default class App extends React.Component {
@@ -47,9 +46,12 @@ export default class App extends React.Component {
         } else {
             return (
                 <div>
-                    <Task image={data.image} image_id={data.image_id} labels={data.labels} handleComplete={this.newTask.bind(this)} />
+                    <Task image={data.image}
+                          image_id={data.image_id}
+                          labels={data.labels}
+                          handleComplete={this.newTask.bind(this)}
+                    />
                     <Status />
-                    <Grid />
                 </div>
             );
         }

@@ -7,6 +7,8 @@ from keras.layers import GlobalMaxPooling2D, GlobalAveragePooling2D, Dense, Drop
 from keras.optimizers import SGD
 from keras.preprocessing import image
 from keras.applications.resnet50 import preprocess_input
+#from keras.metrics import categorical_accuracy
+from sklearn.metrics import accuracy_score
 
 class HiveModel:
 
@@ -99,18 +101,34 @@ class HiveModel:
         print("Training image %d with label %d" % (image_id, class_id))
         self.train(x, y)
 
-    def evaluate(self):
-        self._test_id += 1
-        x = np.expand_dims(self._train_x[self._test_id], axis=0)
-        y = np.expand_dims(self._train_y[self._test_id], axis=0)
-        score = self._model.evaluate(x, y, verbose=0)
+    def evaluate(self, test_id):
+        x = np.expand_dims(self._test_x[test_id], axis=0)
+        y = np.expand_dims(self._test_y[test_id], axis=0)
+        y_hat = self._model.predict(x, verbose=0)
+        label = np.argmax(y_hat, axis=1)[0]
 
-        print("Evaluating id %d, score is %d" % (self._test_id, score[1]))
+        accuracy = 1 if label == self._test_labels[test_id] else 0
 
-        if self._test_id > self._test_x.shape[0]-1:
-            self._test_id = 0
+        print(y, y_hat, accuracy, label)
 
-        return score[1]
+        print("Evaluating id %d, score is %d, label is %d" % (self._test_id, accuracy, label))
+
+        return accuracy, label
+
+
+
+    # def evaluate(self):
+    #     self._test_id += 1
+    #     x = np.expand_dims(self._train_x[self._test_id], axis=0)
+    #     y = np.expand_dims(self._train_y[self._test_id], axis=0)
+    #     score = self._model.evaluate(x, y, verbose=0)
+    #
+    #     print("Evaluating id %d, score is %d" % (self._test_id, score[1]))
+    #
+    #     if self._test_id > self._test_x.shape[0]-1:
+    #         self._test_id = 0
+
+    #    return score[1], self._test_id
 
     def train(self, x, y):
         self._model.fit(x=x, y=y, batch_size=1, epochs=1, verbose=0)
