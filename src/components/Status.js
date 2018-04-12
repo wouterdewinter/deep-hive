@@ -7,7 +7,8 @@ export default class Status extends React.Component {
         this.state = {
             accuracy: 0,
             test_scores: [],
-            test_labels: []
+            test_labels: [],
+            labels: []
         }
     }
 
@@ -38,7 +39,8 @@ export default class Status extends React.Component {
                 setter({
                     accuracy: data.accuracy,
                     test_scores: data.test_scores,
-                    test_labels: data.test_labels
+                    test_labels: data.test_labels,
+                    labels: data.labels
                 });
             });
 
@@ -48,7 +50,7 @@ export default class Status extends React.Component {
         return (
             <div className="status">
                 Accuracy {this.state.accuracy}
-                <Grid test_labels={this.state.test_labels} test_scores={this.state.test_scores} />
+                <Grid test_labels={this.state.test_labels} test_scores={this.state.test_scores} labels={this.state.labels} />
             </div>
         );
     }

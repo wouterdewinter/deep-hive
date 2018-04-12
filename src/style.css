@@ -1,6 +1,32 @@
-body {background-color: #ddd; font-family: sans-serif}
+body {
+    background-color: #ddd;
+    font-family: sans-serif
+}
+
+.grid {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
 .grid td {margin: 0; padding: 0}
 
-.label {background-color: #afa; text-align: center; padding: 4px 10px; font-weight: bold}
-.label.correct {background-color: #afa;}
-.label.incorrect {background-color: #faa;}
+.sample {position: relative}
+
+.label {
+    border-radius: 3px;
+    left: 10px;
+    right: 10px;
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    background-color: #afa;
+    text-align: center;
+    padding: 2px 10px;
+    font-weight: bold;
+    color: #fff
+
+}
+
+.label.correct {background-color: #0a0;}
+
+.label.incorrect {background-color: #a00;}

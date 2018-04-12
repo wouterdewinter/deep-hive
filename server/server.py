@@ -50,7 +50,8 @@ def get_status():
     data = {
         'accuracy': mean,
         'test_labels': r.lrange('test_labels', 0, -1),
-        'test_scores': r.lrange('test_scores', 0, -1)
+        'test_scores': r.lrange('test_scores', 0, -1),
+        'labels': model._classes
     }
 
     return jsonify(data)

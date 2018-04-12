@@ -17,7 +17,8 @@ export default class Grid extends React.Component {
             //Inner loop to create children
             for (let j = 0; j < 6; j++) {
                 let score = this.props.test_scores[image_id] !== 'undefined' ? this.props.test_scores[image_id] : -1;
-                let label = this.props.test_labels[image_id] !== 'undefined' ? this.props.test_labels[image_id] : -1;
+                let class_id = this.props.test_labels[image_id] !== 'undefined' ? this.props.test_labels[image_id] : -1;
+                let label = this.props.labels[class_id];
                 children.push(<td key={j}><Sample image_id={image_id} score={score} label={label}/></td>);
                 image_id++;
             }
