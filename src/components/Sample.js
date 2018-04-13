@@ -1,4 +1,5 @@
 import React from 'react';
+import * as FontAwesome from 'react-icons/lib/fa'
 
 export default class Grid extends React.Component {
 
@@ -8,11 +9,20 @@ export default class Grid extends React.Component {
 
     render() {
         let url = 'http://localhost:5000/image/test/' + this.props.image_id;
-        let className = 'label ' + (this.props.score === "1" ? 'correct' : 'incorrect');
+
+        let icon;
+
+        if (this.props.score === "1") {
+            icon = <div className="score correct"><FontAwesome.FaCheckCircle /></div>;
+        } else {
+            icon = <div className="score incorrect"><FontAwesome.FaTimesCircle /></div>;
+        }
+
         return (
             <div className="sample">
                 <img src={url} />
-                <div className={className}>{this.props.label}</div>
+                {icon}
+                <div className="label">{this.props.label}</div>
             </div>
         );
     }

@@ -31,11 +31,9 @@ export default class Status extends React.Component {
 
         fetch('http://localhost:5000/status')
             .then(function (response) {
-                console.log(3);
                 return response.json();
             })
             .then(function (data) {
-                console.log(data);
                 setter({
                     accuracy: data.accuracy,
                     test_scores: data.test_scores,
@@ -49,7 +47,7 @@ export default class Status extends React.Component {
     render() {
         return (
             <div className="status">
-                Accuracy {this.state.accuracy}
+                <div className="accuracy">Accuracy: {(this.state.accuracy * 100).toFixed(1)} %</div>
                 <Grid test_labels={this.state.test_labels} test_scores={this.state.test_scores} labels={this.state.labels} />
             </div>
         );

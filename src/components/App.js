@@ -45,13 +45,12 @@ export default class App extends React.Component {
             return <div>Loading...</div>;
         } else {
             return (
-                <div>
+                <div class="app">
                     <Task image={data.image}
                           image_id={data.image_id}
                           labels={data.labels}
                           handleComplete={this.newTask.bind(this)}
                     />
-                    <Status />
                 </div>
             );
         }

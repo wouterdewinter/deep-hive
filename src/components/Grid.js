@@ -23,15 +23,13 @@ export default class Grid extends React.Component {
                 image_id++;
             }
             //Create the parent and add the children
-            table.push(<tr>{children}</tr>)
+            table.push(<tr key={i}>{children}</tr>)
         }
         return table
     }
 
 
     render() {
-        console.log(this.props);
-
         return (
             <table className="grid">
                 <tbody>{this.createTable()}</tbody>
