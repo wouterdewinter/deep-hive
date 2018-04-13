@@ -12,10 +12,10 @@ export default class Grid extends React.Component {
 
         // Outer loop to create parent
         let image_id = 0;
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 5; i++) {
             let children = [];
             //Inner loop to create children
-            for (let j = 0; j < 6; j++) {
+            for (let j = 0; j < 8; j++) {
                 let score = this.props.test_scores[image_id] !== 'undefined' ? this.props.test_scores[image_id] : -1;
                 let class_id = this.props.test_labels[image_id] !== 'undefined' ? this.props.test_labels[image_id] : -1;
                 let label = this.props.labels[class_id];

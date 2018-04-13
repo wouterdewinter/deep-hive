@@ -1,5 +1,7 @@
 import React from 'react';
 import Grid from './Grid'
+import Metric from './Metric'
+import Link from './Link'
 
 export default class Status extends React.Component {
     constructor(props) {
@@ -8,6 +10,7 @@ export default class Status extends React.Component {
             accuracy: 0,
             test_scores: [],
             test_labels: [],
+            annotation_count: 0,
             labels: []
         }
     }
@@ -38,6 +41,7 @@ export default class Status extends React.Component {
                     accuracy: data.accuracy,
                     test_scores: data.test_scores,
                     test_labels: data.test_labels,
+                    annotation_count: data.annotation_count,
                     labels: data.labels
                 });
             });
@@ -47,7 +51,9 @@ export default class Status extends React.Component {
     render() {
         return (
             <div className="status">
-                <div className="accuracy">Accuracy: {(this.state.accuracy * 100).toFixed(1)} %</div>
+                <Metric id="accuracy" label="Accuracy" value={this.state.accuracy} type="percent" />
+                <Metric id="annotation_count" label="Annotation count" value={this.state.annotation_count} />
+                <Link url="http://bit.ly/bloomy2018" />
                 <Grid test_labels={this.state.test_labels} test_scores={this.state.test_scores} labels={this.state.labels} />
             </div>
         );

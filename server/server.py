@@ -51,6 +51,7 @@ def get_status():
         'accuracy': mean,
         'test_labels': r.lrange('test_labels', 0, -1),
         'test_scores': r.lrange('test_scores', 0, -1),
+        'annotation_count': r.get('annotation_count'),
         'labels': model._classes
     }
 
@@ -61,9 +62,12 @@ def post_label():
     global r
 
     data = request.get_json()
-    #print (data)
-    #model.label(data['image_id'], data['class_id'])
+
+    # put annotation in queue for processing
     r.publish('labels', json.dumps(data))
+
+    # increase counter for total number of annotations
+    r.incr('annotation_count')
 
     data['result'] = 'ok'
     return jsonify(data)

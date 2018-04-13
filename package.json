@@ -39,6 +39,7 @@
   "dependencies": {
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
-    "react-icons": "^2.2.7"
+    "react-icons": "^2.2.7",
+    "react-qr-svg": "^2.1.0"
   }
 }
