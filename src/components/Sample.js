@@ -8,20 +8,25 @@ export default class Grid extends React.Component {
     }
 
     render() {
-        let url = 'http://localhost:5000/image/test/' + this.props.image_id;
+        let url = 'http://localhost:5000/image/test/' + (this.props.image_id-1);
 
-        let icon;
+        let icon, className;
 
         if (this.props.score === "1") {
-            icon = <div className="score correct"><FontAwesome.FaCheckCircle /></div>;
+            icon = <FontAwesome.FaCheckCircle />;
+            className = "sample correct"
         } else {
-            icon = <div className="score incorrect"><FontAwesome.FaTimesCircle /></div>;
+            icon = <FontAwesome.FaTimesCircle />;
+            className = "sample incorrect"
         }
 
         return (
-            <div className="sample">
+            <div className={className}>
+                <div className="overlay" />
                 <img src={url} />
-                {icon}
+                <div className="score">
+                    {icon}
+                </div>
                 <div className="label">{this.props.label}</div>
             </div>
         );

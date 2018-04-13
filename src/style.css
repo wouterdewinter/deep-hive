@@ -12,7 +12,10 @@ body {
 
 .grid td {margin: 0; padding: 0}
 
-.sample {position: relative}
+.sample {
+    position: relative;
+}
+
 .sample img {width: 100%; height: 100%}
 .sample .label {
     border-radius: 10px;
@@ -35,11 +38,24 @@ body {
     position: absolute;
 }
 
-.sample .label.correct {background-color: #0a0;}
-.sample .label.incorrect {background-color: #a00;}
+.sample.correct {border-color: green}
+.sample.incorrect {border-color: red}
 
-.score.correct * {color: #0a0;}
-.score.incorrect * {color: #a00;}
+.sample .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+}
+.sample.correct .overlay {background-color: green}
+.sample.incorrect .overlay {background-color: red}
+
+
+.sample.correct .label {background-color: #0a0;}
+.sample.incorrect .label {background-color: #a00;}
+
+.sample.correct .score * {color: #0a0;}
+.sample.incorrect .score * {color: #a00;}
 
 .metric {
     margin: 10px;

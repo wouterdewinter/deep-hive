@@ -11,7 +11,7 @@ export default class Grid extends React.Component {
         let table = [];
 
         // Outer loop to create parent
-        let image_id = 0;
+        let image_id = 1;
         for (let i = 0; i < 5; i++) {
             let children = [];
             //Inner loop to create children
