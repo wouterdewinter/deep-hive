@@ -30,8 +30,9 @@ export default class Status extends React.Component {
     }
 
     updateAccHistory (acc) {
-        let acc_history = this.state.acc_history.slice(0, 10);
-        acc_history.push(acc);
+        let acc_history = this.state.acc_history.slice(0, 100);
+        acc_history.unshift(acc);
+        //acc_history.unshift( Math.random());
         this.setState({acc_history})
     }
 
