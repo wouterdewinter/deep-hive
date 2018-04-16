@@ -8,7 +8,7 @@ export default class Grid extends React.Component {
     }
 
     render() {
-        let url = 'http://localhost:5000/image/test/' + (this.props.image_id-1);
+        let url = 'http://localhost:5000/image/test/' + (this.props.image_id);
 
         let icon, className;
 
@@ -23,11 +23,11 @@ export default class Grid extends React.Component {
         return (
             <div className={className}>
                 <div className="overlay" />
-                <img src={url} />
+                <div className="label">{this.props.label}</div>
                 <div className="score">
                     {icon}
                 </div>
-                <div className="label">{this.props.label}</div>
+                <img src={url} />
             </div>
         );
     }

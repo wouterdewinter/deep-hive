@@ -7,33 +7,23 @@ export default class Grid extends React.Component {
         super(props);
     }
 
-    createTable () {
-        let table = [];
-
-        // Outer loop to create parent
-        let image_id = 1;
-        for (let i = 0; i < 5; i++) {
-            let children = [];
-            //Inner loop to create children
-            for (let j = 0; j < 8; j++) {
-                let score = this.props.test_scores[image_id] !== 'undefined' ? this.props.test_scores[image_id] : -1;
-                let class_id = this.props.test_labels[image_id] !== 'undefined' ? this.props.test_labels[image_id] : -1;
-                let label = this.props.labels[class_id];
-                children.push(<td key={j}><Sample image_id={image_id} score={score} label={label}/></td>);
-                image_id++;
-            }
-            //Create the parent and add the children
-            table.push(<tr key={i}>{children}</tr>)
+    createItems () {
+        let items = [];
+        for (let i = 0; i < 40; i++) {
+            let score = this.props.test_scores[i] !== 'undefined' ? this.props.test_scores[i] : -1;
+            let class_id = this.props.test_labels[i] !== 'undefined' ? this.props.test_labels[i] : -1;
+            let label = this.props.labels[class_id];
+            items.push(<Sample key={i} image_id={i} score={score} label={label} />);
         }
-        return table
+        return items
     }
-
 
     render() {
         return (
-            <table className="grid">
-                <tbody>{this.createTable()}</tbody>
-            </table>
+            <div className="grid">
+               {this.createItems()}
+            </div>
         );
     }
+
 }

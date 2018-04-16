@@ -66,9 +66,6 @@ def post_label():
     # put annotation in queue for processing
     r.publish('labels', json.dumps(data))
 
-    # increase counter for total number of annotations
-    r.incr('annotation_count')
-
     data['result'] = 'ok'
     return jsonify(data)
 

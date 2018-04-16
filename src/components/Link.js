@@ -7,11 +7,11 @@ export default class Link extends React.Component {
         return (
             <div className="metric link">
                 <div className="url">{this.props.url}</div>
-                <div className="qr"><QRCode
+                {/*<div className="qr"><QRCode
                     level="Q"
-                    style={{ width:  200 }}
+                    style={{ width:  150 }}
                     value={this.props.url}
-                /></div>
+                /></div>*/}
             </div>
         );
     }

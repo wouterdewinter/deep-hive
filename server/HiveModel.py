@@ -75,13 +75,12 @@ class HiveModel:
         print(images.shape, labels.shape)
 
         # split test / train set
-        split = 100
-        train_size = 200
+        split = 40
 
         self._test_images = images[:split]
         self._test_labels = labels[:split]
-        self._train_images = images[split:split + train_size]
-        self._train_labels = labels[split:split + train_size]
+        self._train_images = images[split:]
+        self._train_labels = labels[split:]
 
         # perform preprocessing for vgg16 (process copy because preprocess_input changes array)
         self._train_x = preprocess_input(np.copy(self._train_images))

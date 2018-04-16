@@ -1,6 +1,5 @@
 import React from 'react';
 import Task from './Task'
-import Status from './Status'
 
 export default class App extends React.Component {
 
