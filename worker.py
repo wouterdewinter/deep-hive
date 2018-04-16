@@ -8,39 +8,47 @@ r = redis.StrictRedis(host='localhost', port=6379)
 # setup model
 model = HiveModel(path='data/128x128')
 
-#r.delete('sample_label')
-#r.delete('sample_accuracy')
-
 # create initial list for all test images
+r.delete('accuracies')
+r.set('annotation_count', 0)
+r.delete('test_labels')
+r.delete('test_scores')
 r.rpush('test_labels', * [-1] * model._test_x.shape[0])
 r.rpush('test_scores', * [-1] * model._test_x.shape[0])
 
 # listen for labels
 print("Listening for new labels")
 p = r.pubsub()
-p.subscribe('labels')
-for message in p.listen():
+p.subscribe('hive_messages')
+
+# for message in p.listen():
+while True:
+    message = p.get_message()
 
     # only pick up real messages (ignore subscribe messages, etc)
-    if message['type'] == 'message':
+    if message and message['type'] == 'message':
+
+        # unpack data from message
         data = json.loads(message['data'])
 
-        # perform training cycle
-        model.label(data['image_id'], data['class_id'])
+        # annotation message
+        if data['action'] == 'label':
 
-        # increase counter for total number of annotations
-        r.incr('annotation_count')
+            # perform training cycle
+            model.label(data['image_id'], data['class_id'])
 
-        # pick random test image to evaluate
-        test_id = random.randint(0, model._test_x.shape[0] - 1)
-        acc, label = model.evaluate(test_id)
+            # increase counter for total number of annotations
+            r.incr('annotation_count')
 
-        # push to accuracy history and trim list to last n entries
-        r.lpush('accuracies', acc)
-        r.ltrim('accuracies', 0, 64)
+            # pick random test image to evaluate
+            test_id = random.randint(0, model._test_x.shape[0] - 1)
+            acc, label = model.evaluate(test_id)
 
-        # save result
-        r.lset('test_labels', test_id, label)
-        r.lset('test_scores', test_id, acc)
+            # push to accuracy history and trim list to last n entries
+            r.lpush('accuracies', acc)
+            r.ltrim('accuracies', 0, 64)
 
+            # save result
+            r.lset('test_labels', test_id, label)
+            r.lset('test_scores', test_id, acc)
 

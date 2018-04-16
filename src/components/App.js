@@ -44,7 +44,7 @@ export default class App extends React.Component {
             return <div>Loading...</div>;
         } else {
             return (
-                <div class="app">
+                <div className="app">
                     <Task image={data.image}
                           image_id={data.image_id}
                           labels={data.labels}

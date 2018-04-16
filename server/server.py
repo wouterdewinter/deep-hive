@@ -62,13 +62,26 @@ def post_label():
     global r
 
     data = request.get_json()
+    data['action'] = 'label'
 
-    # put annotation in queue for processing
-    r.publish('labels', json.dumps(data))
+    # put message in queue for processing
+    r.publish('hive_messages', json.dumps(data))
 
     data['result'] = 'ok'
     return jsonify(data)
 
+
+@app.route("/reset")
+def reset():
+    global r
+
+    data = {'action': 'reset'}
+
+    # put message in queue for processing
+    r.publish('hive_messages', json.dumps(data))
+
+    data['result'] = 'ok'
+    return jsonify(data)
 
 def return_image(img_data):
     img = PIL.Image.fromarray(img_data)

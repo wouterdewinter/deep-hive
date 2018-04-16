@@ -2,12 +2,14 @@ import React from 'react';
 import Grid from './Grid'
 import Metric from './Metric'
 import Link from './Link'
+import Chart from './Chart'
 
 export default class Status extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             accuracy: 0,
+            acc_history: [],
             test_scores: [],
             test_labels: [],
             annotation_count: 0,
@@ -16,7 +18,7 @@ export default class Status extends React.Component {
     }
 
     componentDidMount() {
-        let intervalId = setInterval(this.timer.bind(this), 1000);
+        let intervalId = setInterval(this.timer.bind(this), 300);
 
         // store intervalId in the state so it can be accessed later:
         this.setState({intervalId: intervalId});
@@ -27,9 +29,16 @@ export default class Status extends React.Component {
         clearInterval(this.state.intervalId);
     }
 
+    updateAccHistory (acc) {
+        let acc_history = this.state.acc_history.slice(0, 10);
+        acc_history.push(acc);
+        this.setState({acc_history})
+    }
+
     timer() {
         // workaround for undefined this
         let setter = this.setState.bind(this);
+        let updateAccHistory = this.updateAccHistory.bind(this);
 
 
         fetch('http://localhost:5000/status')
@@ -37,6 +46,8 @@ export default class Status extends React.Component {
                 return response.json();
             })
             .then(function (data) {
+                updateAccHistory(data.accuracy);
+
                 setter({
                     accuracy: data.accuracy,
                     test_scores: data.test_scores,
@@ -52,6 +63,7 @@ export default class Status extends React.Component {
         return (
             <div className="status">
                 <Metric id="accuracy" label="Accuracy" value={this.state.accuracy} type="percent" />
+                <Chart data={this.state.acc_history} />
                 <Metric id="annotation_count" label="Annotation count" value={this.state.annotation_count} />
                 <Link url="http://bit.ly/bloomy2018" />
                 <Grid test_labels={this.state.test_labels} test_scores={this.state.test_scores} labels={this.state.labels} />

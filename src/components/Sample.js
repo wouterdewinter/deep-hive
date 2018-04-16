@@ -15,15 +15,26 @@ export default class Grid extends React.Component {
         if (this.props.score === "1") {
             icon = <FontAwesome.FaCheckCircle />;
             className = "sample correct"
-        } else {
+        } else if (this.props.score === "0") {
             icon = <FontAwesome.FaTimesCircle />;
             className = "sample incorrect"
+        } else {
+            icon = <FontAwesome.FaQuestionCircle />;
+            className = "sample"
+        }
+
+        let label;
+        if (this.props.label) {
+            label = <div className="label">{this.props.label}</div>;
+        } else {
+            label = ''
         }
 
         return (
+
             <div className={className}>
                 <div className="overlay" />
-                <div className="label">{this.props.label}</div>
+                {label}
                 <div className="score">
                     {icon}
                 </div>
