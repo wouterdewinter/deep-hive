@@ -17,7 +17,7 @@ export default class Task extends React.Component {
 
         let handleComplete = this.props.handleComplete;
 
-        fetch('http://localhost:5000/label', {
+        fetch('/api/label', {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

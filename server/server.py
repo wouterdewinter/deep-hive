@@ -19,14 +19,18 @@ app = Flask(__name__, static_url_path='/static')
 CORS(app)
 
 @app.route("/")
-def hello():
-    return render_template('realtime.html')
+def root():
+    return app.send_static_file('index.html')
 
-@app.route("/task")
+@app.route("/bundle.js")
+def js():
+    return app.send_static_file('bundle.js')
+
+@app.route("/api/task")
 def get_task():
     global image_id, model
 
-    image_url = 'http://localhost:5000/image/train/%d' % image_id
+    image_url = '/api/image/train/%d' % image_id
     data = {
         'image': image_url,
         'image_id': image_id,
@@ -40,7 +44,7 @@ def get_task():
 
     return jsonify(data)
 
-@app.route("/status")
+@app.route("/api/status")
 def get_status():
     acc = r.lrange('accuracies', 0, -1) # fetch complete list
     acc = np.array(acc).astype('float')
@@ -57,7 +61,7 @@ def get_status():
 
     return jsonify(data)
 
-@app.route("/label", methods=['POST'])
+@app.route("/api/label", methods=['POST'])
 def post_label():
     global r
 
@@ -71,7 +75,7 @@ def post_label():
     return jsonify(data)
 
 
-@app.route("/reset")
+@app.route("/api/reset")
 def reset():
     global r
 
@@ -90,12 +94,12 @@ def return_image(img_data):
     bytes.seek(0)
     return send_file(bytes, mimetype='image/png')
 
-@app.route("/image/train/<int:image_id>")
+@app.route("/api/image/train/<int:image_id>")
 def get_train_image(image_id):
     img_data = np.uint8(model._train_images[image_id])
     return return_image(img_data)
 
-@app.route("/image/test/<int:image_id>")
+@app.route("/api/image/test/<int:image_id>")
 def get_test_image(image_id):
     img_data = np.uint8(model._test_images[image_id])
     return return_image(img_data)

@@ -42,7 +42,7 @@ export default class Status extends React.Component {
         let updateAccHistory = this.updateAccHistory.bind(this);
 
 
-        fetch('http://localhost:5000/status')
+        fetch('/api/status')
             .then(function (response) {
                 return response.json();
             })

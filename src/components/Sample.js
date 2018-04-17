@@ -8,7 +8,7 @@ export default class Grid extends React.Component {
     }
 
     render() {
-        let url = 'http://localhost:5000/image/test/' + (this.props.image_id);
+        let url = '/api/image/test/' + (this.props.image_id);
 
         let icon, className;
 

@@ -19,7 +19,6 @@ class HiveModel:
         self._path = path
         self._test_id = 0
 
-        self.init_model()
         self.load_data()
 
     def init_model(self):

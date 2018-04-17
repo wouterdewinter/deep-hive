@@ -22,7 +22,7 @@ module.exports = {
         extensions: ['*', '.js', '.jsx']
     },
     output: {
-        path: __dirname + '/dist',
+        path: __dirname + '/server/static',
         publicPath: '/',
         filename: 'bundle.js'
     },
@@ -30,6 +30,10 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
-        contentBase: './server/static'
+        contentBase: './server/static',
+        disableHostCheck: true,
+        proxy: {
+            "/api": "http://localhost:5000"
+        }
     }
 };

@@ -7,6 +7,7 @@ r = redis.StrictRedis(host='localhost', port=6379)
 
 # setup model
 model = HiveModel(path='data/128x128')
+model.init_model()
 
 # create initial list for all test images
 r.delete('accuracies')

@@ -18,7 +18,7 @@ export default class App extends React.Component {
     }
 
     newTask() {
-        fetch("http://localhost:5000/task")
+        fetch("/api/task")
             .then(res => res.json())
             .then(
                 (result) => {

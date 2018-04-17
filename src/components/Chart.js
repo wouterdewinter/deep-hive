@@ -15,7 +15,7 @@ export default class Chart extends React.Component {
         let width = rect.width;
         let height = rect.height;
 
-        let x = d3.scaleTime()
+        let x = d3.scaleLinear()
             .rangeRound([width, 0]).domain([0,100]);
 
         let y = d3.scaleLinear()
