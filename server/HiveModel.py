@@ -7,8 +7,6 @@ from keras.layers import GlobalMaxPooling2D, GlobalAveragePooling2D, Dense, Drop
 from keras.optimizers import SGD
 from keras.preprocessing import image
 from keras.applications.resnet50 import preprocess_input
-#from keras.metrics import categorical_accuracy
-from sklearn.metrics import accuracy_score
 
 class HiveModel:
 

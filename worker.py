@@ -1,9 +1,13 @@
 import redis
 import json, random
 from server.HiveModel import HiveModel
+import logging, sys
+
+# setup logging
+logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 
 # connect redis
-r = redis.StrictRedis(host='localhost', port=6379)
+r = redis.StrictRedis(host='redis', port=6379, charset="utf-8", decode_responses=True)
 
 # setup model
 model = HiveModel(path='data/128x128')
@@ -18,7 +22,7 @@ r.rpush('test_labels', * [-1] * model._test_x.shape[0])
 r.rpush('test_scores', * [-1] * model._test_x.shape[0])
 
 # listen for labels
-print("Listening for new labels")
+logging.info("Listening for new labels")
 p = r.pubsub()
 p.subscribe('hive_messages')
 

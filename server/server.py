@@ -13,7 +13,7 @@ image_id = 0
 model = HiveModel(path='../data/128x128')
 
 # connect to redis
-r = redis.StrictRedis(host='localhost', port=6379)
+r = redis.StrictRedis(host='redis', port=6379, charset="utf-8", decode_responses=True)
 
 app = Flask(__name__, static_url_path='/static')
 CORS(app)
@@ -48,11 +48,10 @@ def get_task():
 def get_status():
     acc = r.lrange('accuracies', 0, -1) # fetch complete list
     acc = np.array(acc).astype('float')
-    print(acc)
     mean = np.mean(acc)
 
     data = {
-        'accuracy': mean,
+        'accuracy': mean if not np.isnan(mean) else 0,
         'test_labels': r.lrange('test_labels', 0, -1),
         'test_scores': r.lrange('test_scores', 0, -1),
         'annotation_count': r.get('annotation_count'),

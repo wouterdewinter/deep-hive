@@ -1,28 +1,28 @@
 version: '3'
 
 services:
-#  web:
-#    build: .
-#    ports:
-#      - "5000:5000"
-#    volumes:
-#      - .:/opt/src
-#    working_dir: "/opt/src/app"
-#    links:
-#      - db
-#    environment:
-#      FLASK_APP: server.py
-#      FLASK_DEBUG: 1
-#    command: ["source activate snoek && flask run --with-threads --host=0.0.0.0"]
-#  notebooks:
-#    build: .
-#    ports:
-#      - "8888:8888"
-#    volumes:
-#      - .:/opt/src
-#    links:
-#      - db
-#    command: ["jupyter notebook --notebook-dir=notebooks --ip='*' --no-browser --allow-root"]
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/opt/src
+    working_dir: "/opt/src/server"
+    links:
+      - redis
+    environment:
+      FLASK_APP: server.py
+      FLASK_DEBUG: 1
+    command: ["source activate deeplearning && flask run --with-threads --host=0.0.0.0"]
+  worker:
+    build: .
+    volumes:
+      - .:/opt/src
+      - ./data/keras:/root/.keras
+    working_dir: "/opt/src"
+    links:
+      - redis
+    command: ["source activate deeplearning && python -u worker.py"]
   redis:
     image: redis
     ports:

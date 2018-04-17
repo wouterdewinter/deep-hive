@@ -1,0 +1,15 @@
+name: deeplearning
+channels:
+  - defaults
+dependencies:
+  - flask=0.12.2
+  - flask-cors=3.0.3
+  - keras=2.1.5
+  - numpy=1.12.0
+  - pandas=0.20.3
+  - pillow=5.1.0
+  - python=3.6.5
+  - pip:
+    - redis==2.10.6
+prefix: /Users/wouter/anaconda2/envs/deeplearning
+
