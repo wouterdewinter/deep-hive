@@ -7,13 +7,14 @@ import numpy as np
 import PIL
 import io
 from HiveModel import HiveModel
+from Config import Config
 import redis, json
 
 image_id = 0
-model = HiveModel(path='../data/128x128')
+model = HiveModel(path='../' + Config.IMAGE_PATH, img_size=Config.IMAGE_SIZE)
 
 # connect to redis
-r = redis.StrictRedis(host='redis', port=6379, charset="utf-8", decode_responses=True)
+r = redis.StrictRedis(host=Config.REDIS_HOST, port=6379, charset="utf-8", decode_responses=True)
 
 app = Flask(__name__, static_url_path='/static')
 CORS(app)

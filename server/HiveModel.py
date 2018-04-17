@@ -37,7 +37,7 @@ class HiveModel:
             Dense(2, activation='softmax')
         ])
 
-        sgd = SGD(lr=0.001)
+        sgd = SGD(lr=0.0005)
 
         self._model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
         self._model.summary()

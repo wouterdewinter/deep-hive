@@ -4,7 +4,7 @@ services:
   web:
     build: .
     ports:
-      - "5000:5000"
+      - "${HIVE_PORT:-5000}:${HIVE_PORT:-5000}"
     volumes:
       - .:/opt/src
     working_dir: "/opt/src/server"
@@ -13,7 +13,7 @@ services:
     environment:
       FLASK_APP: server.py
       FLASK_DEBUG: 1
-    command: ["source activate deeplearning && flask run --with-threads --host=0.0.0.0"]
+    command: ["source activate deeplearning && flask run --with-threads --host=0.0.0.0 --port=${HIVE_PORT:-5000}"]
   worker:
     build: .
     volumes:
