@@ -7,23 +7,8 @@ export default class Chart extends React.Component {
     }
 
     componentDidMount() {
-        let svg = d3.select("svg"),
-            g = svg.append("g");
-
-        let rect = svg.node().getBoundingClientRect();
-
-        let width = rect.width;
-        let height = rect.height;
-
-        let x = d3.scaleLinear()
-            .rangeRound([width, 0]).domain([0,100]);
-
-        let y = d3.scaleLinear()
-            .rangeRound([height, 0]).domain([0,1]);
-
-        this.line = d3.line()
-            .x(function(d, i) { return x(i); })
-            .y(function(d) { return y(d); });
+        let svg = d3.select("svg");
+        let g = svg.append("g");
 
         g.append("path")
             .attr("fill", "none")
@@ -40,8 +25,26 @@ export default class Chart extends React.Component {
     }
 
     update() {
+        let svg = d3.select("svg");
+
+        let rect = svg.node().getBoundingClientRect();
+
+        let width = rect.width;
+        let height = rect.height;
+
+
+        let x = d3.scaleLinear()
+            .rangeRound([width, 0]).domain([0,100]);
+
+        let y = d3.scaleLinear()
+            .rangeRound([height, 0]).domain([0,1]);
+
+        let line = d3.line()
+            .x(function(d, i) { return x(i); })
+            .y(function(d) { return y(d); });
+
         let path = d3.select("path");
-        path.attr("d", this.line(this.props.data));
+        path.attr("d", line(this.props.data));
     }
 
     render() {
