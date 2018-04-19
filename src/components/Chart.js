@@ -7,15 +7,15 @@ export default class Chart extends React.Component {
     }
 
     componentDidMount() {
-        let svg = d3.select("svg");
+        let svg = d3.select("svg#" + this.props.id);
         let g = svg.append("g");
 
         g.append("path")
             .attr("fill", "none")
-            .attr("stroke", "#fff")
+            .attr("stroke", "#408feb")
             .attr("stroke-linejoin", "round")
             .attr("stroke-linecap", "round")
-            .attr("stroke-width", 4.5);
+            .attr("stroke-width", 3);
 
         this.update();
     }
@@ -25,7 +25,7 @@ export default class Chart extends React.Component {
     }
 
     update() {
-        let svg = d3.select("svg");
+        let svg = d3.select("svg#" + this.props.id);
 
         let rect = svg.node().getBoundingClientRect();
 
@@ -34,7 +34,7 @@ export default class Chart extends React.Component {
 
 
         let x = d3.scaleLinear()
-            .rangeRound([width, 0]).domain([0,100]);
+            .rangeRound([width, 0]).domain([0,300]);
 
         let y = d3.scaleLinear()
             .rangeRound([height, 0]).domain([0,1]);
@@ -49,7 +49,12 @@ export default class Chart extends React.Component {
 
     render() {
         return (
-            <svg id="chart"></svg>
+            <svg className='chart' id={this.props.id}></svg>
         );
     }
 }
+
+Chart.defaultProps = {
+    id: 'chart'
+};
+

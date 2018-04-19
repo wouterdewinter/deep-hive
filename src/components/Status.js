@@ -2,7 +2,6 @@ import React from 'react';
 import Grid from './Grid'
 import Metric from './Metric'
 import Link from './Link'
-import Chart from './Chart'
 
 export default class Status extends React.Component {
     constructor(props) {
@@ -30,7 +29,7 @@ export default class Status extends React.Component {
     }
 
     updateAccHistory (acc) {
-        let acc_history = this.state.acc_history.slice(0, 100);
+        let acc_history = this.state.acc_history.slice(0, 300);
         acc_history.unshift(acc);
         //acc_history.unshift( Math.random());
         this.setState({acc_history})
@@ -63,8 +62,7 @@ export default class Status extends React.Component {
     render() {
         return (
             <div className="status">
-                <Metric id="accuracy" label="Accuracy" value={this.state.accuracy} type="percent" />
-                <Chart data={this.state.acc_history} />
+                <Metric id="accuracy" label="Accuracy" value={this.state.accuracy} type="percent" history={this.state.acc_history} />
                 <Metric id="annotation_count" label="Annotation count" value={this.state.annotation_count} />
                 <Link url="http://bit.ly/bloomy2018" />
                 <Grid test_labels={this.state.test_labels} test_scores={this.state.test_scores} labels={this.state.labels} />

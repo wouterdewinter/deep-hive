@@ -19,7 +19,19 @@ logging.info("Listening for new labels")
 p = r.pubsub()
 p.subscribe('hive_messages')
 
-def init_hive(r, model):
+def run_test(model, r, test_id):
+    # evaluate
+    acc, label = model.evaluate(test_id)
+
+    # push to accuracy history and trim list to last n entries
+    r.lpush('accuracies', acc)
+    r.ltrim('accuracies', 0, 64)
+
+    # save result
+    r.lset('test_labels', test_id, label)
+    r.lset('test_scores', test_id, acc)
+
+def reset(r, model, test_ids):
     # init (or reset) model
     model.init_model()
 
@@ -31,7 +43,17 @@ def init_hive(r, model):
     r.rpush('test_labels', * [-1] * model._test_x.shape[0])
     r.rpush('test_scores', * [-1] * model._test_x.shape[0])
 
-init_hive(r, model)
+    # first evaluate all test images to provide baseline for untrained model
+    for test_id in test_ids:
+        run_test(model, r, test_id)
+
+# create shuffled list of test_ids
+test_ids = list(range(0, model._test_x.shape[0]))
+random.shuffle(test_ids)
+test_index = 0
+
+# start with clean model and metrics
+reset(r, model, test_ids)
 
 # for message in p.listen():
 while True:
@@ -52,20 +74,17 @@ while True:
             # increase counter for total number of annotations
             r.incr('annotation_count')
 
-            # pick random test image to evaluate
-            test_id = random.randint(0, model._test_x.shape[0] - 1)
-            acc, label = model.evaluate(test_id)
+            # pick next test image to evaluate
+            test_index += 1
+            if test_index >= len(test_ids):
+                test_index = 0
 
-            # push to accuracy history and trim list to last n entries
-            r.lpush('accuracies', acc)
-            r.ltrim('accuracies', 0, 64)
-
-            # save result
-            r.lset('test_labels', test_id, label)
-            r.lset('test_scores', test_id, acc)
+            # evaluate
+            test_id = test_ids[test_index]
+            run_test(model, r, test_id)
 
         # reset message
         if data['action'] == 'reset':
             logging.info("Resetting model and metrics")
-            init_hive(r, model)
+            reset(r, model, test_ids)
 

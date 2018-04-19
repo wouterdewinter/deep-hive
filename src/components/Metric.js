@@ -1,4 +1,5 @@
 import React from 'react';
+import Chart from './Chart'
 
 export default class Metric extends React.Component {
 
@@ -13,10 +14,16 @@ export default class Metric extends React.Component {
             value = Math.round(value)
         }
 
+        let chart_id = 'chart-' + this.props.id;
+        let chart = this.props.history ? <Chart data={this.props.history} id={chart_id} /> : '';
+
         return (
             <div className={"metric metric-" + this.props.id}>
-                <div className="label">{this.props.label}</div>
-                <div className="value">{value}</div>
+                {chart}
+                <div className="contents">
+                    <div className="label">{this.props.label}</div>
+                    <div className="value">{value}</div>
+                </div>
             </div>
         );
     }
