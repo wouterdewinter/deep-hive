@@ -34,7 +34,7 @@ class HiveModel:
             GlobalAveragePooling2D(),
             Dense(256, activation='relu'),
             Dropout(0.3),
-            Dense(2, activation='softmax')
+            Dense(len(self._classes), activation='softmax')
         ])
 
         sgd = SGD(lr=0.0005)

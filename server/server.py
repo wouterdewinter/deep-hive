@@ -103,3 +103,10 @@ def get_train_image(image_id):
 def get_test_image(image_id):
     img_data = np.uint8(model._test_images[image_id])
     return return_image(img_data)
+
+@app.after_request
+def add_header(r):
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, max-age=0"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    return r
