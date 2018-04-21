@@ -79,13 +79,19 @@ def post_label():
 def reset():
     global r
 
-    data = {'action': 'reset'}
+    # put message in queue for processing
+    r.publish('hive_messages', json.dumps({'action': 'reset'}))
+
+    return jsonify({'result': 'ok'})
+
+@app.route("/api/simulate")
+def simulate():
+    global r
 
     # put message in queue for processing
-    r.publish('hive_messages', json.dumps(data))
+    r.publish('hive_messages', json.dumps({'action': 'simulate'}))
 
-    data['result'] = 'ok'
-    return jsonify(data)
+    return jsonify({'result': 'ok'})
 
 def return_image(img_data):
     img = PIL.Image.fromarray(img_data)

@@ -6,7 +6,16 @@ import keras
 from keras.layers import GlobalMaxPooling2D, GlobalAveragePooling2D, Dense, Dropout
 from keras.optimizers import SGD
 from keras.preprocessing import image
-from keras.applications.resnet50 import preprocess_input
+
+# Avaiable backbones
+from keras.applications.vgg16 import VGG16 as Backbone
+from keras.applications.vgg16 import preprocess_input
+#from keras.applications.resnet50 import Resnet50 as Backbone
+#from keras.applications.resnet50 import preprocess_input
+#from keras.applications.mobilenet import Mobilenet as Backbone
+#from keras.applications.mobilenet import preprocess_input
+#from keras.applications.xception import Xception as Backbone
+#from keras.applications.xception import preprocess_input
 
 class HiveModel:
 
@@ -21,11 +30,12 @@ class HiveModel:
 
     def init_model(self):
 
-        base_model = keras.applications.VGG16(
-            include_top=False,
+        base_model = Backbone(
             weights='imagenet',
-            input_shape=(self._img_size, self._img_size, 3)
+            include_top=False,
+            input_shape = (self._img_size, self._img_size, 3)
         )
+
 
         base_model.trainable = False
 

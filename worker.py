@@ -88,3 +88,13 @@ while True:
             logging.info("Resetting model and metrics")
             reset(r, model, test_ids)
 
+        # simulate perfect annotations
+        if data['action'] == 'simulate':
+            for i, x in enumerate(model._train_x):
+                class_id = model._train_labels[i]
+                data = {
+                    'action': 'label',
+                    'image_id': int(i),
+                    'class_id': int(class_id)
+                }
+                r.publish('hive_messages', json.dumps(data))

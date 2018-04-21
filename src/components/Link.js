@@ -8,12 +8,18 @@ export default class Link extends React.Component {
         fetch('/api/reset')
     }
 
+    // Simulate perfect annotations
+    simulate() {
+        fetch('/api/simulate')
+    }
+
     render() {
         return (
             <div className="metric link">
                 <div className="contents">
                     <div className="url">{this.props.url}</div>
                     <button onClick={this.reset}>Reset</button>
+                    <button onClick={this.simulate}>Simulate</button>
                 </div>
                 {/*<div className="qr"><QRCode
                     level="Q"

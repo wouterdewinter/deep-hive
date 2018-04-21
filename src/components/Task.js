@@ -34,9 +34,11 @@ export default class Task extends React.Component {
     }
 
     render() {
+        let image = this.props.image;
+
         return (
             <div className="task">
-                <img src={this.props.image}/>
+                <img src={image}/>
                 <ul>
                     {this.props.labels.map((item, i) => <li key={i}>
                         <button data-id={i} onClick={this.handleClick}>{item}</button>
