@@ -64,7 +64,7 @@ export default class Status extends React.Component {
             <div className="status">
                 <Metric id="accuracy" label="Accuracy" value={this.state.accuracy} type="percent" history={this.state.acc_history} />
                 <Metric id="annotation_count" label="Annotation count" value={this.state.annotation_count} />
-                <Link url="http://bit.ly/bloomy2018" />
+                <Link url="http://bit.ly/bfr18" />
                 <Grid test_labels={this.state.test_labels} test_scores={this.state.test_scores} labels={this.state.labels} />
             </div>
         );
