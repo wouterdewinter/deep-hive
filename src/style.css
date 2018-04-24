@@ -46,7 +46,8 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    opacity: 0.2;
+    opacity: 0.3;
+    mix-blend-mode: multiply;
 }
 
 .sample.correct .overlay {background-color: green}
