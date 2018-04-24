@@ -3,10 +3,17 @@
 
 I use this to illustrate to illustrate the basic process of (supervised) machine learning and give the audience a feel of how much (or how little) data is needed for training.
 
+For the [Kaggle Dogs vs. Cats dataset](https://www.kaggle.com/c/dogs-vs-cats) we get about 90% accuracy in about 250 user annotation. With 25 people in your audience this takes less than one minute!   
+
 The application has two main parts:
 
-1. **Dashboard**: This is the live dashboard displayed on the presentation screen
-2. **Annotation**: Your audience will visit the annotation page to do some annotations
+#### Dashboard
+This is the live dashboard displayed on the presentation screen
+[Dashboard screenshot](docs/dashboard.png)
+
+#### Annotation
+Your audience will visit the annotation page to do some annotations
+[Annotation screenshot](docs/annotate.png)
 
 ## Model
 A pretty simple model is used:
