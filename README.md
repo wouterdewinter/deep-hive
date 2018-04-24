@@ -1,27 +1,36 @@
 # Deep Hive
-Tap into the hive mind with your audience and train a deep convolutional neural network live on stage.
+**Tap into the hive mind with your audience and train a deep convolutional neural network live on stage.**
 
-The application consists of these pages:
+I use this to illustrate to illustrate the basic process of (supervised) machine learning and give the audience a feel of how much (or how little) data is needed for training.
 
-##### Dashboard
-This is the live dashboard displayed on the presentation screen
+The application has two main parts:
 
-##### Annotation page
-Your audience will visit the annotation page to do some annotations
+1. **Dashboard**: This is the live dashboard displayed on the presentation screen
+2. **Annotation**: Your audience will visit the annotation page to do some annotations
 
 ## Model
-A very simple model is used: two dense layers on top of a VGG16 backbone           
-
+A pretty simple model is used:
+- VGG16 backbone
+- GlobalAveragePooling2D
+- Dense (256)
+- Dropout
+- Dense (size is number of classes)
+           
 ## Stack
  * Python
  * Keras (tensorflow)
  * Flask
- * Keras
+ * Redis
  * React.js
  * D3.js
- * webpack
+ * Webpack
 
 ## Usage
+#### Custom datasets
+You can use your own dataset. The model is a classifier so the application expects the folders in the data directory to have the names of the classes. Specify the data directory with `IMAGE_PATH` in the `Config.py` file,
+
+The application needs the images to be in a fixed size (default is 128x128). You can use the `preprocess.ipynb` notebook to rescale the images to the preferred size.
+
 #### Docker
 The easiest way to run this application is via docker.
 
