@@ -1,3 +1,6 @@
+"""Worker that listens to events from the Flask webserver and runs the keras model
+"""
+
 import redis
 import json, random
 from server.HiveModel import HiveModel
@@ -19,6 +22,7 @@ logging.info("Listening for new labels")
 p = r.pubsub()
 p.subscribe('hive_messages')
 
+
 def run_test(model, r, test_id):
     # evaluate
     acc, label = model.evaluate(test_id)
@@ -30,6 +34,7 @@ def run_test(model, r, test_id):
     # save result
     r.lset('test_labels', test_id, label)
     r.lset('test_scores', test_id, acc)
+
 
 def reset(r, model, test_ids):
     # init (or reset) model
@@ -55,7 +60,6 @@ test_index = 0
 # start with clean model and metrics
 reset(r, model, test_ids)
 
-# for message in p.listen():
 while True:
     message = p.get_message()
 

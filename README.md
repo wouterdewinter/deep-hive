@@ -1,9 +1,9 @@
 # Deep Hive
 **Tap into the hive mind with your audience and train a deep convolutional neural network live on stage.**
 
-I use this to illustrate to illustrate the basic process of (supervised) machine learning and give the audience a feel of how much (or how little) data is needed for training.
+I use this during presentations to illustrate to the basic process of (supervised) machine learning and give the audience a feel of how much (or how little) data is needed for training.
 
-For the [Kaggle Dogs vs. Cats dataset](https://www.kaggle.com/c/dogs-vs-cats) we get about 90% accuracy in about 250 user annotation. With 25 people in your audience this takes less than one minute!   
+For the [Kaggle Dogs vs. Cats dataset](https://www.kaggle.com/c/dogs-vs-cats) you get about 90% accuracy in about 250 user annotations. With 25 people in your audience this typically takes less than one minute!   
 
 The application has two main parts:
 
@@ -33,6 +33,15 @@ A pretty simple model is used:
  * Webpack
 
 ## Usage
+#### Preparing the Dogs vs Cats dataset
+1. Download the `train.zip` file from [Kaggle Dogs vs. Cats dataset](https://www.kaggle.com/c/dogs-vs-cats)
+2. Unzip it in the data directory. It should create a `train` folder
+3. Preprocess the images using
+
+   ```
+   python preprocess.py data/train data/catsdogs
+   ```
+
 #### Custom datasets
 You can use your own dataset. The model is a classifier so the application expects the folders in the data directory to have the names of the classes. Specify the data directory with `IMAGE_PATH` in the `Config.py` file,
 
