@@ -57,8 +57,8 @@ You can start all needed containers locally by running:
 #### Standalone
 To run it directly on your local machine, create and activate conda environment first
 
-    conda env create -f /tmp/environment.yml
-    source activate deeplearning
+    conda env create -f environment.yml
+    source activate deephive
     
 Start the flask application
 

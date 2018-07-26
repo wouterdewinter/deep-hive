@@ -16,7 +16,7 @@ services:
       REDIS_HOST: redis
       LC_ALL: C.UTF-8
       LANG: C.UTF-8
-    command: ["source activate deeplearning && flask run --with-threads --host=0.0.0.0 --port=${HIVE_PORT:-5000}"]
+    command: ["source activate deephive && flask run --with-threads --host=0.0.0.0 --port=${HIVE_PORT:-5000}"]
   worker:
     build: .
     volumes:
@@ -27,7 +27,7 @@ services:
       - redis
     environment:
       REDIS_HOST: redis
-    command: ["source activate deeplearning && python -u worker.py"]
+    command: ["source activate deephive && python -u worker.py"]
   redis:
     image: redis
     ports:

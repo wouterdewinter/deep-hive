@@ -1,4 +1,4 @@
-name: deeplearning
+name: deephive
 channels:
   - defaults
 dependencies:
@@ -11,5 +11,5 @@ dependencies:
   - python=3.6.5
   - pip:
     - redis==2.10.6
-prefix: /Users/wouter/anaconda2/envs/deeplearning
+prefix: /Users/wouter/anaconda2/envs/deephive
 
