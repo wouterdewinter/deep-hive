@@ -76,7 +76,7 @@ To recompile the javascript first install the npm packages:
 
     npm install
     
-Then run webpack to compile:
+For convenience, a bundle.js file has been committed in the repo. Run webpack to re-compile:
 
     npm run build
 
