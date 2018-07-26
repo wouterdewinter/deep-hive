@@ -1,13 +1,17 @@
-"""Preprocessing image datasets, compatible with Kaggle Dogs & Cats dataset
+"""Preprocessing image datasets, compatible with the Kaggle Dogs & Cats dataset
 """
 
 import os, sys
 from os.path import join
 from server.Config import Config
 from PIL import Image
+from random import shuffle
+
+# limits the amount of images to preprocess
+limit = 1000
 
 path = ''
-output_path = ''
+output_path = '
 
 if len(sys.argv) == 3:
     path = sys.argv[1]
@@ -22,7 +26,10 @@ if not os.path.exists(output_path):
 files = next(os.walk(path))[2]
 image_id = 0
 
-for file in files:
+# shuffle so we evenly balance the amount of images per class
+shuffle(files)
+
+for file in files[:limit]:
     filename = join(path, file)
 
     # only process of format is classname.id.extension
