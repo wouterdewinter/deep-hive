@@ -6,20 +6,13 @@ import keras
 from keras.layers import GlobalMaxPooling2D, GlobalAveragePooling2D, Dense, Dropout
 from keras.optimizers import SGD
 from keras.preprocessing import image
-
-# Avaiable backbones
 from keras.applications.vgg16 import VGG16 as Backbone
 from keras.applications.vgg16 import preprocess_input
-#from keras.applications.resnet50 import Resnet50 as Backbone
-#from keras.applications.resnet50 import preprocess_input
-#from keras.applications.mobilenet import Mobilenet as Backbone
-#from keras.applications.mobilenet import preprocess_input
-#from keras.applications.xception import Xception as Backbone
-#from keras.applications.xception import preprocess_input
 
 class HiveModel:
+    """Wrapper around keras model that provides convenience methods"""
 
-    def __init__(self, img_size = 128, path='data/128x128'):
+    def __init__(self, img_size = 128, path='data/catsdogs'):
         self._img_size = img_size
         self._model = None
         self._classes = []
@@ -29,6 +22,7 @@ class HiveModel:
         self.load_data()
 
     def init_model(self):
+        """Compile and build the model"""
 
         base_model = Backbone(
             weights='imagenet',
@@ -53,6 +47,8 @@ class HiveModel:
         self._model.summary()
 
     def load_data(self):
+        """Load data and create np arrays for training and testing"""
+
         print("Loading images ...")
 
         self._classes = next(os.walk(self._path))[1]
@@ -100,6 +96,8 @@ class HiveModel:
         print("Loaded %d images" % images.shape[0])
 
     def label(self, image_id, class_id):
+        """Label an image with a class id"""
+
         image_id = int(image_id)
         class_id = int(class_id)
         x = np.expand_dims(self._train_x[image_id], axis=0)
@@ -108,6 +106,8 @@ class HiveModel:
         self.train(x, y)
 
     def evaluate(self, test_id):
+        """evaluate accuracy of a single test image"""
+
         x = np.expand_dims(self._test_x[test_id], axis=0)
         y = np.expand_dims(self._test_y[test_id], axis=0)
         y_hat = self._model.predict(x, verbose=0)
@@ -122,4 +122,6 @@ class HiveModel:
         return accuracy, label
 
     def train(self, x, y):
+        """Fit model on a dataset"""
+
         self._model.fit(x=x, y=y, batch_size=1, epochs=1, verbose=0)

@@ -3,10 +3,9 @@
 
 import redis
 import json, random
+import logging, sys
 from server.HiveModel import HiveModel
 from server.Config import Config
-
-import logging, sys
 
 # setup logging
 logging.basicConfig(stream=sys.stderr, level=logging.INFO)
@@ -24,6 +23,8 @@ p.subscribe('hive_messages')
 
 
 def run_test(model, r, test_id):
+    """Evaluate a single image"""
+
     # evaluate
     acc, label = model.evaluate(test_id)
 
@@ -37,6 +38,8 @@ def run_test(model, r, test_id):
 
 
 def reset(r, model, test_ids):
+    """Reset keras model"""
+
     # init (or reset) model
     model.init_model()
 

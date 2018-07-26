@@ -21,11 +21,6 @@ export default class Link extends React.Component {
                     <button onClick={this.reset}>Reset</button>
                     <button onClick={this.simulate}>Simulate</button>
                 </div>
-                {/*<div className="qr"><QRCode
-                    level="Q"
-                    style={{ width:  150 }}
-                    value={this.props.url}
-                /></div>*/}
             </div>
         );
     }

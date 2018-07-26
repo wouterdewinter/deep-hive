@@ -11,7 +11,7 @@ from random import shuffle
 limit = 1000
 
 path = ''
-output_path = '
+output_path = ''
 
 if len(sys.argv) == 3:
     path = sys.argv[1]
