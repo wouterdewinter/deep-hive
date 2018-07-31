@@ -9,11 +9,11 @@ The application has two main parts:
 
 #### Dashboard
 This is the live dashboard displayed on the presentation screen
-![Dashboard screenshot](/docs/dashboard.png)
+![Dashboard screenshot](/docs/dashboard.jpg)
 
 #### Annotation
 Your audience will visit the annotation page to do some annotations
-![Annotation screenshot](/docs/annotate.png)
+![Annotation screenshot](/docs/annotate.jpg)
 
 ## Model
 A pretty simple model is used:
