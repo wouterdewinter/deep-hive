@@ -47,6 +47,9 @@ You can use your own dataset. The model is a classifier so the application expec
 
 The application needs the images to be in a fixed size (default is 128x128). You can use the `preprocess.ipynb` notebook to rescale the images to the preferred size.
 
+#### Custom url
+To change the url displayed for the audience on the dashboard edit the `short_url` parameter in `src/config.json` file and recompile the frontend (see Frontend section).
+
 #### Docker
 The easiest way to run this application is via docker.
 
