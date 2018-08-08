@@ -5,7 +5,9 @@ I use this during presentations to illustrate to the basic process of (supervise
 
 For the [Kaggle Dogs vs. Cats dataset](https://www.kaggle.com/c/dogs-vs-cats) you get about 90% accuracy in about 250 user annotations. With 25 people in your audience this typically takes less than one minute!   
 
-More information about the design and architecture can be found in this HackerNoon article on Medium: [Deep Hive: Deep learning live on stage](https://hackernoon.com/deep-hive-deep-learning-live-on-stage-7d1525a55bb1)
+More information about the design and architecture can be found in this HackerNoon article on Medium:
+
+[Deep Hive: Deep learning live on stage](https://hackernoon.com/deep-hive-deep-learning-live-on-stage-7d1525a55bb1)
 
 The application has two main parts:
 
