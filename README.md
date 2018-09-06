@@ -56,6 +56,12 @@ The easiest way to run this application is via docker.
 You can start all needed containers locally by running:
     
     docker-compose up
+    
+When docker is running, the dashboard can be found at:\
+[http://localhost:5000/dashboard](http://localhost:5000/dashboard)
+
+And the annotation interface at:\
+[http://localhost:5000/](http://localhost:5000/)
 
 #### Standalone
 To run it directly on your local machine, create and activate conda environment first
