@@ -29,7 +29,7 @@ A pretty simple model is used:
 - Dense (size is number of classes)
            
 ## Stack
- * Python
+ * Python (python 3 only)
  * Keras (tensorflow)
  * Flask
  * Redis
